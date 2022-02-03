@@ -3,6 +3,17 @@
 
 format: jb-book
 root: intro
+
 chapters:
-- file: markdown
-- file: notebooks
+  - file: install
+  # - title: Databases
+  - file: databases
+    sections:
+    - file: databases/bigquery
+    - file: databases/mssql
+    - file: databases/mysql
+    - file: databases/oracle
+    - file: databases/postgres
+    - file: databases/sqlite
+  - file: notebooks
+  
