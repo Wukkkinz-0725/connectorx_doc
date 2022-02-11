@@ -1,16 +1,19 @@
 # Oracle
 
-This is a small sample book to give you a feel for how book content is
-structured.
+Oracle does not need to specify protocol.
 
-:::{note}
-Here is a note!
-:::
-
-And here is a code block:
-
-```
-e = mc^2
-```
-
-Check out the content pages bundled with this sample book to see more.
+### Oracle-Pandas Type Mapping
+| Oracle Type               |      Pandas Type            |  Comment                           |
+|:-------------------------:|:---------------------------:|:----------------------------------:|
+| Number(\*,0)              | int64, Int64(nullable)      |                                    |
+| Number(\*,>0)             | float64                     |                                    |
+| Float                     | float64                     |                                    |
+| BINARY_FLOAT              | float64                     |                                    |
+| BINARY_DOUBLE             | float64                     |                                    |
+| VARCHAR2                  | object                      |                                    |
+| CHAR                      | object                      |                                    |
+| NCHAR                     | object                      |                                    |
+| NVarchar2                 | object                      |                                    |
+| DATE                      | datetime64[ns]              |                                    |
+| TIMESTAMP                 | datetime64[ns]              |                                    |
+| TIMESTAMP WITH TIME ZONE  | datetime64[ns]              |                                    |

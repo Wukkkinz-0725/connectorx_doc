@@ -99,12 +99,12 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../install.html">
-   Installation
+   Getting Started
   </a>
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="../databases.html">
-   Databases
+   Databases configuration and performance
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -145,8 +145,8 @@
   </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks.html">
-   Content with notebooks
+  <a class="reference internal" href="../freq_questions.html">
+   Frequently asked questions
   </a>
  </li>
 </ul>
@@ -231,6 +231,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#oracle-pandas-type-mapping">
+   Oracle-Pandas Type Mapping
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -243,6 +256,19 @@
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#oracle-pandas-type-mapping">
+   Oracle-Pandas Type Mapping
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -251,17 +277,68 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="oracle">
 <h1>Oracle<a class="headerlink" href="#oracle" title="Permalink to this headline">¶</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Here is a note!</p>
+<p>Oracle does not need to specify protocol.</p>
+<div class="section" id="oracle-pandas-type-mapping">
+<h2>Oracle-Pandas Type Mapping<a class="headerlink" href="#oracle-pandas-type-mapping" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>Oracle Type</p></th>
+<th class="text-align:center head"><p>Pandas Type</p></th>
+<th class="text-align:center head"><p>Comment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>Number(*,0)</p></td>
+<td class="text-align:center"><p>int64, Int64(nullable)</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>Number(*,&gt;0)</p></td>
+<td class="text-align:center"><p>float64</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>Float</p></td>
+<td class="text-align:center"><p>float64</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>BINARY_FLOAT</p></td>
+<td class="text-align:center"><p>float64</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>BINARY_DOUBLE</p></td>
+<td class="text-align:center"><p>float64</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>VARCHAR2</p></td>
+<td class="text-align:center"><p>object</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>CHAR</p></td>
+<td class="text-align:center"><p>object</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>NCHAR</p></td>
+<td class="text-align:center"><p>object</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>NVarchar2</p></td>
+<td class="text-align:center"><p>object</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>DATE</p></td>
+<td class="text-align:center"><p>datetime64[ns]</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>TIMESTAMP</p></td>
+<td class="text-align:center"><p>datetime64[ns]</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>TIMESTAMP WITH TIME ZONE</p></td>
+<td class="text-align:center"><p>datetime64[ns]</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>And here is a code block:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">mc</span><span class="o">^</span><span class="mi">2</span>
-</pre></div>
-</div>
-<p>Check out the content pages bundled with this sample book to see more.</p>
 </div>
 
     <script type="text/x-thebe-config">

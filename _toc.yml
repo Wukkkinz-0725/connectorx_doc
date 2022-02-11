@@ -15,5 +15,5 @@ chapters:
     - file: databases/oracle
     - file: databases/postgres
     - file: databases/sqlite
-  - file: notebooks
-  
+  - file: freq_questions
+

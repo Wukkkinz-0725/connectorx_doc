@@ -51,6 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="SQLite" href="databases/sqlite.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -94,15 +95,15 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="install.html">
-   Installation
+   Getting Started
   </a>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="databases.html">
-   Databases
+   Databases configuration and performance
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -142,9 +143,9 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="notebooks.html">
-   Content with notebooks
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Frequently asked questions
   </a>
  </li>
 </ul>
@@ -229,6 +230,34 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-specify-the-partition-number">
+   How to specify the partition number?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-choose-the-partition-column">
+   How to choose the partition column?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-print-log-in-python">
+   How to print log in Python?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-build-connectorx-locally">
+   How to build ConnectorX locally?
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -241,6 +270,34 @@
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-specify-the-partition-number">
+   How to specify the partition number?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-choose-the-partition-column">
+   How to choose the partition column?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-print-log-in-python">
+   How to print log in Python?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-build-connectorx-locally">
+   How to build ConnectorX locally?
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -249,17 +306,75 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="frequently-asked-questions">
 <h1>Frequently asked questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Here is a note!</p>
+<div class="section" id="how-to-specify-the-partition-number">
+<h2>How to specify the partition number?<a class="headerlink" href="#how-to-specify-the-partition-number" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">partition_num</span></code> will determine how many queries we are going to split from the original one and issue to the database. Underlying, we use <a class="reference external" href="https://github.com/rayon-rs/rayon">rayon</a> as our parallel executor, which adopts a pool of threads to handle each partitioned query. The number of threads in the pool equals to the number of logical cores on the machine. It is recommended to set the <code class="docutils literal notranslate"><span class="pre">partition_num</span></code> to the number of available logical cores.</p>
 </div>
-<p>And here is a code block:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">mc</span><span class="o">^</span><span class="mi">2</span>
+<div class="section" id="how-to-choose-the-partition-column">
+<h2>How to choose the partition column?<a class="headerlink" href="#how-to-choose-the-partition-column" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">partition_on</span></code> specifies on which column we will do the partition as above procedure. In order to achieve the best performance, it is ideal that each partitioned query will return the same number of rows. And since we partition the column evenly, it is recommended that the numerical <code class="docutils literal notranslate"><span class="pre">partition_on</span></code> column is evenly distributed. Whether a column has index or not might also affect the performance depends on the source database. You can give it a try if you have multiple candidates. Also, you can manually partition the query if our partition method cannot match your need. ConnectorX will still return a whole dataframe with all the results of the list of queries you input.</p>
+</div>
+<div class="section" id="how-to-print-log-in-python">
+<h2>How to print log in Python?<a class="headerlink" href="#how-to-print-log-in-python" title="Permalink to this headline">¶</a></h2>
+<p>Set the environment variable <code class="docutils literal notranslate"><span class="pre">RUST_LOG</span></code> to have a detailed look at Rust log.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;RUST_LOG&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;connectorx=debug,connectorx_python=debug&quot;</span>
+<span class="kn">import</span> <span class="nn">connectorx</span> <span class="k">as</span> <span class="nn">cx</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">cx</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span> <span class="o">//</span> <span class="n">It</span> <span class="n">will</span> <span class="n">be</span> <span class="n">more</span> <span class="n">clear</span> <span class="n">to</span> <span class="n">test</span> <span class="n">when</span> <span class="n">no</span> <span class="n">partitioning</span> <span class="n">first</span>
 </pre></div>
 </div>
-<p>Check out the content pages bundled with this sample book to see more.</p>
+</div>
+<div class="section" id="how-to-build-connectorx-locally">
+<h2>How to build ConnectorX locally?<a class="headerlink" href="#how-to-build-connectorx-locally" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Step 1: Fresh clone of source</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/sfu-db/connector-x.git
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Step 2: Install nightly-2021-10-21</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ rustup install nightly-2021-10-21
+info: syncing channel updates <span class="k">for</span> <span class="s1">&#39;nightly-2021-10-21-aarch64-apple-darwin&#39;</span>
+
+  nightly-2021-10-21-aarch64-apple-darwin unchanged - rustc <span class="m">1</span>.58.0-nightly <span class="o">(</span>efd048394 <span class="m">2021</span>-10-20<span class="o">)</span>
+
+info: checking <span class="k">for</span> self-updates
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Step 3: Override default project toolchain</p></li>
+</ul>
+<div class="highlight-base notranslate"><div class="highlight"><pre><span></span>$ rustup default nightly-2021-10-21
+$ rustup override set nightly-2021-10-21
+$ rustup show
+Default host: aarch64-apple-darwin
+rustup home:  /Users/user/.rustup
+
+installed toolchains
+--------------------
+
+stable-aarch64-apple-darwin
+nightly-2021-10-21-aarch64-apple-darwin (default)
+nightly-aarch64-apple-darwin
+
+active toolchain
+----------------
+
+nightly-2021-10-21-aarch64-apple-darwin (default)
+rustc 1.58.0-nightly (efd048394 2021-10-20)
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Step 4: Build</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ just bootstrap-python
+$ just ci-build-python-extention ci-build-python-wheel ci-rename-wheel
+</pre></div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -286,7 +401,14 @@ structured.</p>
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="databases/sqlite.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">SQLite</p>
+        </div>
+    </a>
 </div>
             
         </div>

@@ -36,11 +36,7 @@ Currently, we support partitioning on **numerical** columns (**cannot contain NU
 
 Check out more detailed usage and examples [here](#detailed-usage-and-examples). A general introduction of the project can be found in this [blog post](https://towardsdatascience.com/connectorx-the-fastest-way-to-load-data-from-databases-a65d4d4062d5).
 
-# Installation
 
-```bash
-pip install connectorx
-```
 
 # Performance
 
